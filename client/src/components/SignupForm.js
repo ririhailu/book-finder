@@ -11,3 +11,30 @@ const SignupForm = () => {
     email: '', 
     password: '' 
   });
+
+  // set state for form validation
+  const [validated] = useState(false);
+  // set state for alert
+  const [showAlert, setShowAlert] = useState(false);
+
+  const [addUser, { error, data }] = useMutation(ADD_USER);
+
+  useEffect(() => {
+    if (error) {
+      setShowAlert(true);
+    } else {
+      setShowAlert(false);
+    }
+  }, [error]);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    setUserFormData({
+      ...userFormData,
+      [name]: value 
+    });
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
